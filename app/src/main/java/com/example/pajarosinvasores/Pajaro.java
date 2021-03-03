@@ -38,7 +38,7 @@ public class Pajaro {
         pajaro3 = Bitmap.createScaledBitmap(pajaro3, ancho, altura, false);
         pajaro4 = Bitmap.createScaledBitmap(pajaro4, ancho, altura, false);
 
-        //Los pájaros serán creados fuera de la pantalla justo al comenzar el juegi
+        //Los pájaros serán creados fuera de la pantalla justo al comenzar el juego
         y = -altura;
     }
 

@@ -13,7 +13,7 @@ public class Fondo {
         //Añadimos el fondo de pantalla
         fondo = BitmapFactory.decodeResource(res, R.drawable.fondo);
         //Redimensionamos el fondo para que ocupe toda la pantalla
-        fondo = Bitmap.createScaledBitmap(fondo, pantallaX, pantallaY, false);
+        fondo = Bitmap.createScaledBitmap(fondo, pantallaX , pantallaY, false);
     }
 
 }

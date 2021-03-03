@@ -11,7 +11,6 @@ import static com.example.pajarosinvasores.GameView.ratioPantallaY;
 public class Avioneta {
 
     int disparar = 0;
-    boolean vaHaciaArriba = false;
     int x, y, ancho, alto, contHelice = 0, contadorDisparos = 1;
     Bitmap avioneta1, avioneta2, disparo1, disparo2, disparo3, disparo4, disparo5, muerto;
     private final GameView gameView;

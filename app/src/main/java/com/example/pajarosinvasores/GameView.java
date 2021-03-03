@@ -25,6 +25,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean estaJugando, haPerdido = false;
     private final int pantallaY, pantallaX;
+    private final int velocidadFondo = 10;;
     private int puntuacion = 0;
     //Con estas dos variables, controlamos que el juego vaya bien en pantallas con distintas resoluciones
     public static float ratioPantallaX, ratioPantallaY;
@@ -75,7 +76,6 @@ public class GameView extends SurfaceView implements Runnable {
         this.pantallaX = pantallaX;
         this.pantallaY = pantallaY;
         //He puesto el ratio de mi pantalla como referencia
-        //ratioPantallaX = 1080f / pantallaX;
         ratioPantallaX = 2340f / pantallaX;
         ratioPantallaY = 1080f / pantallaY;
 
@@ -92,7 +92,7 @@ public class GameView extends SurfaceView implements Runnable {
         //Creamos el paint para dibujar el número de puntuación
         paint = new Paint();
         paint.setTextSize(128);
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.RED);
 
         //Inicializamos el array de pájaros a 4 (número máximo de pájaros en pantalla)
         pajaros = new Pajaro[4];
@@ -119,8 +119,8 @@ public class GameView extends SurfaceView implements Runnable {
     //Aquí definimos el movimiento/posición de los sprites para refrescar la pantalla
     private void refrescarPantalla() {
         //Por cada llamada al método, iremos avanzando 10 posiciones en el eje X, por lo que los fondos se moverán 10 posiciones a la izquierda
-        fondo1.x -= 10 * ratioPantallaX;
-        fondo2.x -= 10 * ratioPantallaX;
+        fondo1.x -= velocidadFondo;
+        fondo2.x -= velocidadFondo;
 
         //Controlamos si el fondo 1 sigue mostrándose en pantalla o no. En caso de que no esté, lo posicionamos al final del eje X de la pantalla
         if (fondo1.x + fondo1.fondo.getWidth() < 0) {
@@ -166,7 +166,7 @@ public class GameView extends SurfaceView implements Runnable {
                     //Añadimos la puntuación
                     puntuacion++;
                     //Ponemos al pájaro fuera de la pantalla
-                    pajaro.x = -2000;
+                    pajaro.x = -10000;
                     //Posicionamos al disparo fuera de la pantalla para que pueda ser recolectado por nuestra lista de basura
                     disparo.x = pantallaX + 500;
                     pajaro.esDisparado = true;
@@ -305,6 +305,7 @@ public class GameView extends SurfaceView implements Runnable {
         estaJugando = true;
         thread = new Thread(this);
         thread.start();
+        mediaPlayer.start();
     }
 
     //Este método pausará el juego
@@ -312,6 +313,7 @@ public class GameView extends SurfaceView implements Runnable {
         //Pausamos el hilo y cambiamos el boolean
         try {
             estaJugando = false;
+            mediaPlayer.pause();
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -322,35 +324,9 @@ public class GameView extends SurfaceView implements Runnable {
     //Cuando pulsemos la pantalla, dispararemos
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        /*switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (event.getX() < pantallaX / 2) {
-                    avioneta.vaHaciaArriba = true;
-                }
-                break;
-
-            case MotionEvent.ACTION_UP:
-                avioneta.vaHaciaArriba = false;
-                if (event.getX() > pantallaX / 2)
-                    avioneta.disparar++;
-                break;
-        }*/
-
-        /*case MotionEvent.ACTION_DOWN:
-
-                if (event.getX() < pantallaX / 2) {
-                    avioneta.vaHaciaArriba = true;
-                }
-                break;
-                */
-
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            avioneta.vaHaciaArriba = false;
-            //if (event.getX() > pantallaX / 2)
-                avioneta.disparar++;
+            avioneta.disparar++;
         }
-
         return true;
     }
 
