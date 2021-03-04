@@ -7,12 +7,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean estaMuteado;
+    private boolean estaMuteado, esDificil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,34 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean("estaMuteado", estaMuteado);
                 editor.apply();
 
+            }
+        });
+
+        //Controlamos la dificultad con el botón
+        esDificil = prefs.getBoolean("esDificil", false);
+
+        final Button dificultadBT = findViewById(R.id.dificultadBT);
+
+        //Cambiamos la imagen del icono dependiendo de si está muteado o no
+        if (esDificil)
+            dificultadBT.setText("Difícil");
+        else
+            dificultadBT.setText("Fácil");
+
+        //En el onClick cambiaremos la dificultad dependiendo de su estado anterior
+        dificultadBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Muy parecido a lo hecho anteriormente con el mute
+                esDificil = !esDificil;
+                if (esDificil)
+                    dificultadBT.setText("Difícil");
+                else
+                    dificultadBT.setText("Fácil");
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("esDificil", esDificil);
+                editor.apply();
             }
         });
     }

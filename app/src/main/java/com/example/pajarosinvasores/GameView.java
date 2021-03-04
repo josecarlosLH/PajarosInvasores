@@ -194,12 +194,22 @@ public class GameView extends SurfaceView implements Runnable {
                 }
 
                 //Si el pájaro sale de la pantalla, incrementamos su velocidad de forma aleatoria (lo estaríamos "reviviendo")
-                int limite = (int) (30 * ratioPantallaX);
-                pajaro.velocidad = random.nextInt(limite);
+                if (!prefs.getBoolean("esDificil", false)) {
+                    int limite = (int) (20 * ratioPantallaX);
+                    pajaro.velocidad = random.nextInt(limite);
 
-                //Establecemos una velocidad mínima a la que irá el pájaro
-                if (pajaro.velocidad < 30 * ratioPantallaX)
-                    pajaro.velocidad = (int) (30 * ratioPantallaX);
+                    //Establecemos una velocidad mínima a la que irá el pájaro
+                    if (pajaro.velocidad < 20 * ratioPantallaX)
+                        pajaro.velocidad = (int) (20 * ratioPantallaX);
+                } else {
+                    int limite = (int) (30 * ratioPantallaX);
+                    pajaro.velocidad = random.nextInt(limite);
+
+                    //Establecemos una velocidad mínima a la que irá el pájaro
+                    if (pajaro.velocidad < 30 * ratioPantallaX)
+                        pajaro.velocidad = (int) (30 * ratioPantallaX);
+                }
+
 
                 //Posicionamos al pájaro al fondo de la pantalla en el eje X
                 pajaro.x = pantallaX;
@@ -305,7 +315,10 @@ public class GameView extends SurfaceView implements Runnable {
         estaJugando = true;
         thread = new Thread(this);
         thread.start();
-        mediaPlayer.start();
+        if (!prefs.getBoolean("estaMuteado", false)) {
+            mediaPlayer.start();
+            mediaPlayer.setLooping(true);
+        }
     }
 
     //Este método pausará el juego

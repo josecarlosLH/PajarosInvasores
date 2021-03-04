@@ -13,7 +13,6 @@ import android.view.WindowManager;
 
 import java.util.List;
 
-
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
 
     private GameView gameView;
